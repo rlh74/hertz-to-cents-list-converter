@@ -5,6 +5,7 @@
       rows="12"
       class="input-textarea"
       @input="parseInputTextDebounced"
+      placeholder="Enter frequencies to convert here, separating each frequency by a new line. Values are interpreted as decimals, non-valid characters are ignored."
       ></textarea>
 </template>
 

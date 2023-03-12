@@ -1,10 +1,11 @@
 <template>
-    <header>Cents: <i>Starting at {{ parsedInput[0] }} Hz.</i></header>
+    <header>Cents: <i>{{ parsedInput[0] ? 'Starting at ' + parsedInput[0] + ' Hz' : ''}}</i></header>
     <textarea
       v-model="centsText"   
       rows=12 
       readOnly
       class="input-textarea"
+      placeholder="Frequencies as difference from root in cents displayed here"
     ></textarea>
 </template>
 
