@@ -1,44 +1,31 @@
 <template>
+  <h1 class="text-4xl mb-8">Frequency to Cents Converter</h1>
   <div class="app">
     <div class="container">
-      <header>Hertz:</header>
-      <textarea 
-        v-model.trim="inputText"
-        rows="12"
-        class="input-textarea"
-        @input="processedInput"
-        ></textarea>
+      <InputForm @parsedTextUpdate="updateParsedText"></InputForm>
     </div>
     <div class="container">
-      <CentsList :processedInput="processedText"></CentsList>
+      <CentsList :parsedInput="parsedText"></CentsList>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, ref } from 'vue'
 import CentsList from './components/CentsList.vue'
+import InputForm from './components/InputForm.vue'
 
 export default defineComponent({
   name: 'App',
-  components: { CentsList },
+  components: { CentsList, InputForm },
   setup() {
-    const inputText = ref('')
-    const processedText = ref<string[]>([])
+    const parsedText = ref<string[]>([])
 
-    const processedInput = () => {
-      processedText.value = inputText.value
-        .split(/\r?\n|,/)
-        .map((item) => item.trim())
-        .filter((item) => item !== '')
-        .filter((item) => !isNaN(parseFloat(item)))
-        .map((item) => parseFloat(item).toFixed(2))
-        .sort((a, b) => parseFloat(a) - parseFloat(b));
+    const updateParsedText = (parsed: string[]) => {
+      parsedText.value = parsed
     }
 
-    watch(inputText, processedInput)
-
-    return { inputText, processedText, processedInput }
+    return { parsedText, updateParsedText }
   },
 })
 
@@ -47,9 +34,14 @@ export default defineComponent({
 
 
 <style>
+
 .app {
   justify-content: center;
   display: flex;
+}
+
+h1 {
+  text-align: center;
 }
 
 .input-textarea {
