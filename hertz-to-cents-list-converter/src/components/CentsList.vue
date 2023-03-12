@@ -10,20 +10,20 @@
 
 <script lang="ts">
 import { defineComponent, computed, type PropType } from 'vue';
-import { processedInputToCents } from '@/utils';
+import { parsedInputToCents } from '@/utils';
 
 export default defineComponent({
   name: 'CentsList',
   props: {
-    processedInput: {
+    parsedInput: {
       type: Array as PropType<string[]>,
       required: true,
     },
   },
   setup(props) {
     const centsText = computed(() => {
-      if (props.processedInput.length === 0) return []
-      const cents = processedInputToCents(props.processedInput);
+      if (props.parsedInput.length === 0) return []
+      const cents = parsedInputToCents(props.parsedInput);
       return cents.join("\n");
     })
 
