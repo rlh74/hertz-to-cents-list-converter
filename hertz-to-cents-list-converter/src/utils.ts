@@ -8,17 +8,21 @@ export function debounce(func: (...args: any[]) => void, timeout = 300) {
   };
 }
 
-export function processedInput(inputText: string): number[] {
-  const frequencies: string[] = inputText.split(/[\n,]/);
-  const filteredFrequencies: string[] = frequencies.filter((freq) => freq !== "");
-  const parsedFrequencies: number[] = filteredFrequencies.map((freq) => parseFloat(freq));
-  const sortedFrequencies: number[] = parsedFrequencies.sort((a, b) => a - b);
-  return sortedFrequencies;
-}
-
-export function processedInputToCents(input: string[]): number[] {
+export function parsedInputToCents(input: string[]): number[] {
   const freqs = input.map(parseFloat).sort((a, b) => a - b);
   const refFreq = freqs[0];
-  return freqs.map((freq) => 1200 * Math.log2(freq / refFreq));
+  return freqs.map((freq) => 1200 * Math.log2(freq / refFreq)).splice(1, freqs.length - 1);
+}
+
+export function parseInput(input: string): string[] {
+  const parsedInput = input
+    .split(/\r?\n|,/)
+    .map((item) => item.trim())
+    .filter((item) => item !== '')
+    .filter((item) => !isNaN(parseFloat(item)))
+    .map((item) => parseFloat(item))
+    .sort((a, b) => a - b);
+    return parsedInput as unknown as string[];
+
 }
 

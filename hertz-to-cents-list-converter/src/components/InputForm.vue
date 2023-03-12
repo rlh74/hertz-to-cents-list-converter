@@ -4,13 +4,13 @@
       v-model.trim="inputText"
       rows="12"
       class="input-textarea"
-      @input="parseInputText"
+      @input="parseInputTextDebounced"
       ></textarea>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
-import { parseInput } from '@/utils'
+import { debounce, parseInput } from '@/utils'
 
 
 export default defineComponent({
@@ -27,9 +27,11 @@ export default defineComponent({
       props.onParsedTextUpdate?.(parsedText.value)
     } 
 
-    watch(inputText, parseInputText)
+    const parseInputTextDebounced = debounce(parseInputText, 325)
 
-    return { inputText, parseInputText }
+    watch(inputText, parseInputTextDebounced)
+
+    return { inputText, parseInputTextDebounced }
 
   }
 })
