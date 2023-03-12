@@ -1,12 +1,17 @@
 <template>
   <div class="app">
-    <textarea 
-      v-model.trim="inputText"
-      rows="12"
-      class="input-textarea"
-      @input="processedInput"
-      ></textarea>
-    <CentsList :processedText="processedText" class="cents-list"></CentsList>
+    <div class="container">
+      <header>Hertz:</header>
+      <textarea 
+        v-model.trim="inputText"
+        rows="12"
+        class="input-textarea"
+        @input="processedInput"
+        ></textarea>
+    </div>
+    <div class="container">
+      <CentsList :processedInput="processedText"></CentsList>
+    </div>
   </div>
 </template>
 
@@ -43,26 +48,41 @@ export default defineComponent({
 
 <style>
 .app {
+  justify-content: center;
   display: flex;
-  flex-wrap: wrap;
 }
 
 .input-textarea {
-  width: 30%;
+  /* width: 50%; */
   height: 100%;
   padding: 10px;
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.5;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  font-family: inherit;
+  background-color: inherit;
+  color: inherit;
+
 }
 
-.cents-list {
+textarea {
+  margin: 0%;
+}
+
+.container {
   width: 50%;
   height: 100%;
+  padding: 10px;
+  margin-left: 10px;
+
+}
+
+ul {
+  list-style-type: none;
+  margin-block-start: 0%;
+  padding-inline-start: 0%;
 }
 
 </style>

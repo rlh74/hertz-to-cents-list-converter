@@ -1,36 +1,33 @@
 <template>
-  <div class="cents-list">
-    <ul>
-      <li v-for="item in cents" :key="item">
-        {{ item.toFixed(4) }}
-      </li>
-    </ul>
-  </div>
+    <header>Cents:</header>
+    <textarea
+      v-model="centsText"   
+      rows=12 
+      readOnly
+      class="input-textarea"
+    ></textarea>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed, type PropType } from 'vue';
+import { processedInputToCents } from '@/utils';
 
 export default defineComponent({
   name: 'CentsList',
   props: {
-    processedText: {
+    processedInput: {
       type: Array as PropType<string[]>,
       required: true,
     },
   },
   setup(props) {
-    const cents = computed(() => {
-      if (props.processedText.length === 0) return []
-
-      const base = parseFloat(props.processedText[0])
-      return props.processedText.map((item) => {
-        const frequency = parseFloat(item)
-        return Math.abs(1200 * Math.log2(frequency / base))
-      })
+    const centsText = computed(() => {
+      if (props.processedInput.length === 0) return []
+      const cents = processedInputToCents(props.processedInput);
+      return cents.join("\n");
     })
 
-    return { cents }
+    return { centsText }
   },
 })
 
@@ -42,7 +39,4 @@ li {
   list-style: none;
 }
 
-.cents-list {
-  display: flex;
-}
 </style>
