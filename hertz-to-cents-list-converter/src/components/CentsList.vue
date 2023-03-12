@@ -1,5 +1,5 @@
 <template>
-    <header>Cents:</header>
+    <header>Cents: <i>Starting at {{ parsedInput[0] }} Hz.</i></header>
     <textarea
       v-model="centsText"   
       rows=12 
